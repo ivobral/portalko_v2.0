@@ -1,9 +1,9 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
+import { Navbar, Homepage } from './components';
 
-import { Navbar } from './components';
 import './App.css';
+
+
 
 const App = () => {
     return (
@@ -12,7 +12,7 @@ const App = () => {
                 <Navbar />
             </div>
             <div className="main">
-
+                <Homepage />
             </div>
             <div className="footer">
 
