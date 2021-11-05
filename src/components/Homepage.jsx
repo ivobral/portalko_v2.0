@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -14,7 +14,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Grid } from '@material-ui/core';
-import { getResult } from './FeedCatcher.js';
+import axios from './axios.js';                             
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -34,26 +34,34 @@ const Homepage = () => {
       setExpanded(!expanded);
     };
 
-    getResult().then(function(result) {
-        setData(result.data.items);
-    })
+    useEffect(() => {
+        async function fetchData() {
+            const res = await axios.get('/');
 
+            setData(res.data);
+            return res;
+        }
+
+        fetchData()
+    }, []);
+
+    
     return (
         <div style={{ padding: 30 }}>
             <Grid container spacing={9} justifyContent="center">
                 {data.map((newsCard) => (
-                    <Grid item key={newsCard.guid} style={{ padding: 30 }}>
+                    <Grid item key={newsCard.link} style={{ padding: 30 }}>
                         <Card  style={{width: 375, background: "rgb(213, 174, 176)"}}>
-                            <CardHeader avatar={<Avatar aria-label="recipe">{newsCard.author}</Avatar>} action={<IconButton aria-label="settings"><MoreVertIcon /></IconButton>} title={newsCard.author} subheader={newsCard.pubDate} />
-                            <CardMedia component="img" height="140" image={newsCard.thumbnail} alt="Paella dish" />
-                            <CardContent><Typography variant="body2" color="text.secondary">{newsCard.title}</Typography></CardContent>
+                            <CardHeader avatar={<Avatar aria-label="recipe"><img alt="Slika novina" src={newsCard.logo} /></Avatar>} action={<IconButton aria-label="settings"><MoreVertIcon /></IconButton>} title={newsCard.creator} subheader={newsCard.pubDate} />
+                            <CardMedia component="img" height="200" image={newsCard.description} alt="Paella dish" style={{ objectFit: "fill",  }}/>
+                            <CardContent><Typography variant="body2" color="text.secondary"><strong>{newsCard.title}</strong></Typography></CardContent>
                             <CardActions disableSpacing>
                                 <IconButton aria-label="add to favorites"><FavoriteIcon /></IconButton>
                                 <IconButton aria-label="share"><ShareIcon /></IconButton>
-                                <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more"><ExpandMoreIcon /></ExpandMore>
+                                <ExpandMore expand={false} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more"><ExpandMoreIcon /></ExpandMore>
                             </CardActions>
                             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <CardContent><Typography>{newsCard.categories}</Typography></CardContent>
+                                <CardContent><Typography>{newsCard.category}</Typography></CardContent>
                             </Collapse>
                         </Card>
                     </Grid>
