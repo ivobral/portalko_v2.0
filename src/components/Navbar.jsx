@@ -2,9 +2,8 @@ import React from 'react'
 // import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';;
-
-
+import Typography from '@mui/material/Typography';
+import './Navbar.css';
 
 const Navbar = () => {
     function searchToggle(event, form_state) {
@@ -32,7 +31,7 @@ const Navbar = () => {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                 >
-                    <strong>PORTALKO</strong>
+                    <h2 data-text="Portalko" >Portalko</h2>
                 </Typography>  
                 <form action="" className="search-wrapper">
                     <input className="input-holder" onChange={(event)=>searchToggle(event, false)} type="search" placeholder="Type to search" required style={{color:"#5e0303"}}/>

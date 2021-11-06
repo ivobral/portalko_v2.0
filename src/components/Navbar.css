@@ -1,0 +1,29 @@
+h2 {
+    position: relative;
+    color: #07051a;
+    -webkit-text-stroke: 0.3vw #5e0303;
+    text-transform: uppercase;
+}
+
+h2::before {
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 0;
+    width: 32,5%;
+    color: #5e0303;
+    -webkit-text-stroke: 0vw #5e0303;
+    overflow: hidden;
+    animation: animate 6s linear infinite;
+}
+
+@keyframes animate {
+    0%
+    {
+        width: 0;
+    }
+    70%,100%
+    {
+        width:100%;
+    }
+}
